@@ -3,7 +3,7 @@
 export SLACKROOTDIR="$1"
 ARCH="x86_64"
 VERSION="current"
-MIRROSCRIPT=/root/mirror-slackware-current.sh
+MIRRORSCRIPT=/root/mirror-slackware-current.sh
 A=""
 [ "$ARCH" = "x86_64" ] && A="64"
 declare -a failures
