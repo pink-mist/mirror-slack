@@ -1,6 +1,17 @@
 #!/bin/bash
 
+export SLACKROOTDIR="$1"
+ARCH="x86_64"
+VERSION="current"
+MIRROSCRIPT=/root/mirror-slackware-current.sh
+A=""
+[ "$ARCH" = "x86_64" ] && A="64"
 declare -a failures
+
+mirror() {
+  "$MIRRORSCRIPT" -a "$ARCH" -r "$VERSION" -f
+  verify
+}
 
 verify_dir() {
 	for pkg in $1/*.t?z
@@ -16,18 +27,28 @@ verify_dir() {
 	done
 }
 
-for dir in a ap d e f k kde kdei l n t tcl x xap xfce y
-do
-	verify_dir "$1/$dir"
-done
-
-if [ ${#failures[*]} -gt 0 ]
-then
-	echo; echo "----------------";
-	echo "Failures:"
-	for fail in ${failures[@]}
+verify() {
+	for dir in a ap d e f k kde kdei l n t tcl x xap xfce y
 	do
-		echo $fail
+		verify_dir "${SLACKROOTDIR}/slackware${A}-${VERSION}/slackware${A}/$dir"
 	done
-fi
+	check_failures()
+}
 
+check_failures() {
+	if [ ${#failures[*]} -gt 0 ]
+	then
+		echo; echo "----------------";
+		echo "Failures:"
+		for fail in ${failures[@]}
+		do
+			echo $fail
+			rm "$fail" "$fail.asc"
+		done
+		unset failures
+		declare -a failures
+		mirror
+	fi
+}
+
+mirror
