@@ -14,7 +14,7 @@ mirror() {
 }
 
 verify_dir() {
-	for pkg in "$1/*.t?z"
+	for pkg in "$1"/*.t?z
 	do
 		echo -n "Checking $pkg ... "
 		if gpg --verify ${pkg}.asc $pkg &>/dev/null
