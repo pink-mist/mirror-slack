@@ -9,7 +9,7 @@ A=""
 declare -a failures
 
 mirror() {
-  "$MIRRORSCRIPT" -a "$ARCH" -r "$VERSION" -f
+  "$MIRRORSCRIPT" -a "$ARCH" -r "$VERSION" -f || exit 3
   verify
 }
 
