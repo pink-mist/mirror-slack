@@ -22,7 +22,7 @@ verify_dir() {
 			echo -e "\033[32mOK\033[0m"
 		else
 			echo -e "\033[31mNOT OK\033[0m"
-			failures[${#failures[*]}]=$pkg
+			failures[${#failures[*]}]="$pkg"
 		fi
 	done
 }
