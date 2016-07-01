@@ -17,7 +17,9 @@ verify_dir() {
 	for pkg in "$1"/*.t?z
 	do
 		echo -n "Checking $pkg ... "
-		if gpg --verify ${pkg}.asc $pkg &>/dev/null
+		gpg --verify "${pkg}.asc" "$pkg" &>/dev/null
+		RES=$?
+		if [[ $RES -eq 0 ]]
 		then
 			echo -e "\033[32mOK\033[0m"
 		else
